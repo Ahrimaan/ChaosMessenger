@@ -19,11 +19,11 @@ import { AppRoutes } from './app.routes';
     messagingSenderId: '486670196021'
   };
 
-
 // App Modules
 import { LoginModule } from './+login/login.module';
 import { SharedModule } from './+shared/shared.module';
 import { HeaderModule } from './+header/header.module';
+import { DashboardModule } from './+dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { HeaderModule } from './+header/header.module';
     RouterModule.forRoot(AppRoutes),
     LoginModule,
     SharedModule,
-    HeaderModule
+    HeaderModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

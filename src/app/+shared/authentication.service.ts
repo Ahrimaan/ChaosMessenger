@@ -3,10 +3,13 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+import { IAuthenticationService } from './IAuthenticationService'
 import * as firebase from 'firebase';
 
 @Injectable()
-export class AuthenticationService {
+export class AuthenticationService implements IAuthenticationService {
+  Username: String;
+
   private isAuthenticated: BehaviorSubject<boolean>;
 
   constructor(private auth: AngularFire) {

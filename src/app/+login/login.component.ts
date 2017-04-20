@@ -9,8 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['login.css']
 })
 export class LoginComponent implements OnInit {
- constructor(private authService: AuthenticationService) {
-
+ constructor(private authService: AuthenticationService, private router:Router) {
+    this.authService.IsAuthenticated.subscribe(x => {
+      console.log(x);
+      if(x){
+          this.router.navigateByUrl('home');
+      }
+    })
  }
   ngOnInit(): void {}
 
