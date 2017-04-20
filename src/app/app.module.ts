@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule, } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AngularFireModule } from 'angularfire2';
 
 import { AppComponent } from './app.component';
@@ -24,6 +24,8 @@ import { LoginModule } from './+login/login.module';
 import { SharedModule } from './+shared/shared.module';
 import { HeaderModule } from './+header/header.module';
 import { DashboardModule } from './+dashboard/dashboard.module';
+import { RegisterModule } from './+register/register.module';
+import { AdminModule } from './+admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { DashboardModule } from './+dashboard/dashboard.module';
     LoginModule,
     SharedModule,
     HeaderModule,
-    DashboardModule
+    DashboardModule,
+    RegisterModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]

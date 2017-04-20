@@ -13,5 +13,5 @@ import { DashboardComponent } from './dashboard.component';
   providers: [AuthenticationService]
 })
 export class DashboardModule {
-    
+  
  }
