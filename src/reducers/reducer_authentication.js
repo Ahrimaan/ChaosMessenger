@@ -8,7 +8,7 @@ export default function (state = null, action) {
         case CURRENT_USER:
             return action.payload;
         case LOGOUT:
-            state = null;
+            return null;
         default:
             return state;
     }

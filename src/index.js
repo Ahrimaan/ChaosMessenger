@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import promise from 'redux-promise';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import logger from 'redux-logger'
 import reducers from './reducers';
 import NavigationBar from './components/navigation-bar';
 
-const createStoreWithMiddleware = applyMiddleware(thunkMiddleware,logger)(createStore);
+const createStoreWithMiddleware = applyMiddleware(thunkMiddleware,promise,logger)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>

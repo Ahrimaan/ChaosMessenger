@@ -1,4 +1,4 @@
-import authService from '../authenticationService';
+import authService from '../services/authenticationService';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -41,3 +41,5 @@ export function logout(){
         type: LOGOUT
     }
 }
+
+
