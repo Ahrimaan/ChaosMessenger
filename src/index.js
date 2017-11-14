@@ -9,6 +9,7 @@ import logger from 'redux-logger'
 import reducers from './reducers';
 import NavigationBar from './components/navigation-bar';
 import Chat from './components/chat';
+import ChatItem from './components/chat-list-item';
 
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, promise, logger)(createStore);
 
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Switch>
           { /* <Route exact={true} path="/posts/new" component={PostNew} /> */}
           <Chat />
+          <ChatItem message="AAAAAAA"/>
         </Switch>
       </div>
     </BrowserRouter>

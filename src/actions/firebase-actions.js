@@ -1,25 +1,22 @@
-import firebase from 'firebase';
+import firebase from '../services/firebase';
 import { firebaseConfig } from '../consts';
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-export const FIREBASE_AUTHENTICATED = 'FIREBASE_AUTHENTICATED';
 export const MESSAGE_RECIEVED = 'MESSAGE_RECIEVED';
 export const MESSAGE_SEND = 'MESSAGE_SEND';
+export const MESSAGE_SENDING = 'MESSAGE_SENDING';
+export const SUBSCRIBED = 'FB:SUBSCRIBED';
 
-export function authenticateFirebase(firebaseToken) {
-    let request = firebaseApp.auth().signInWithCustomToken(firebaseToken);
-    return {
-        type: FIREBASE_AUTHENTICATED,
-        payload: request
+export function subscribeOnChat() {
+    return (dispatch) => {
+        let action = {
+            type: SUBSCRIBED
+        };
+        dispatch(action);
+        firebaseApp.database().ref('messages').on('value', (snapshot) => {
+            dispatch(newMessageRecieved(snapshot.val()));
+        });
     };
 }
-
-firebaseApp.database().ref('chatroom').on('value', (snapshot) => {
-    return (dispatch) => {
-        dispatch(newMessageRecieved(snapshot.val()));
-    }
-});
 
 export function newMessageRecieved(message) {
     let action = {
@@ -29,12 +26,23 @@ export function newMessageRecieved(message) {
     return action;
 }
 
-export function addMessageToChat() {
-    let request = firebaseApp.database().ref('chatroom').set('TEST');
-    return {
-        type: MESSAGE_SEND,
-        payload: request
-    };
+export function addMessageToChat(message) {
+    message.sendDate = Date.now();
+    return (dispatch) => {
+        let sendAction = {
+            type:MESSAGE_SENDING,
+            payload:request
+        }
+        dispatch(sendAction);
+        let request = firebase.database().ref('chat').child('messages').push(message).then((value, err) => {
+            message.id = value.key;
+            let action = {
+                type: MESSAGE_SEND,
+                payload: message
+            };
+            dispatch(action);
+        });
+    }
 }
 
 newMessageRecieved();

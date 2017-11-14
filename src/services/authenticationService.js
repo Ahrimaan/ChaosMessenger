@@ -21,7 +21,6 @@ let lock = new Auth0Lock(
 export default class AuthenticationService {
     login() {
         return new Promise((resolve, reject) => {
-            lock.show();
             lock.on("authenticated", (authResult) => {
                 let expireDate = moment().add(authResult.expiresIn, 'seconds');
                 let tokens = {
@@ -44,9 +43,10 @@ export default class AuthenticationService {
                     }).catch(err => {
                         return reject(error);
                     });
-                    
+
                 });
             });
+            lock.show();
         });
     }
 
@@ -60,7 +60,7 @@ export default class AuthenticationService {
                 api_type: 'firebase'
             }
         };
-    
+
         let request = axios.get(auth0DelegationEndpoint, params);
         let promise = new Promise((resolve, reject) => {
             request.then((result) => {

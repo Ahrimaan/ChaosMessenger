@@ -1,26 +1,28 @@
 import authService from '../services/authenticationService';
-import { authenticateFirebase } from './firebase-actions';
 import moment from 'moment';
+import firebase from '../services/firebase';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const CURRENT_USER = 'CURRENT_USER';
-export const SHOW_LOGIN = 'SHOW_LOGIN';
-export const USER_ISAUTHENTICATED = 'USER_ISAUTHENTICATED';
 export const LOGOUT = 'LOGOUT';
 
 export function showLogin() {
     return (dispatch) => {
         let request = new authService().login().then((result) => {
-            let action = {
-                type: SHOW_LOGIN
-            };
-            dispatch(action);
-            dispatch(loggedIn(result));
+            dispatch(authenticateFirebase(result))
         }, (error) => {
             console.log(error);
         });
     }
+}
+
+export function authenticateFirebase(profile) {
+    return (dispatch) => {
+        let request = firebase.auth().signInWithCustomToken(profile.firebase.token).then((result) => {
+            dispatch(loggedIn(profile));
+        }); 
+    };    
 }
 
 export function getCurrentUser() {
@@ -31,20 +33,10 @@ export function getCurrentUser() {
             type: CURRENT_USER,
             payload: currentUser
         }
-        dispatch(action);
-        dispatch(isAuthenticated());
+        dispatch(action);      
     }
 
     return action;
-}
-
-export function isAuthenticated() {
-    let tokens = localStorage.getItem('tokens');
-    let isExpired = !moment(tokens.expires).isAfter(Date.now());
-    return {
-        type:USER_ISAUTHENTICATED,
-        payload : isExpired
-    };
 }
 
 export function loggedIn(profile) {
@@ -54,15 +46,19 @@ export function loggedIn(profile) {
             payload: profile
         };
         dispatch(action);
-        dispatch(authenticateFirebase(profile.firebase.token));
     }
 }
 
 export function logout(){
-    let auth = new authService();
-    auth.logout();
-    return {
-        type: LOGOUT
+    return (dispatch) => {
+        let action = {
+            type: LOGOUT
+        };
+        let auth = new authService();
+        auth.logout();
+        firebase.auth().signOut();
+        firebase.database().goOffline();
+        dispatch(action);
     }
 }
 

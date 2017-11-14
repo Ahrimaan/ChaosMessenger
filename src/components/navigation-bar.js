@@ -9,7 +9,7 @@ export default class NavigationBar extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a >Chaos Messanger</a>
+                        <a >Chaos Messenger</a>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav pullRight>

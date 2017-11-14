@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import { FIREBASE_AUTHENTICATED, MESSAGE_RECIEVED } from '../actions/firebase-actions';
+import { MESSAGE_RECIEVED, MESSAGE_SEND } from '../actions/firebase-actions';
 
-export default function (state = null, action) {
+export default function (state = [], action) {
     switch (action.type) {
-        case FIREBASE_AUTHENTICATED: {
-            return _.merge(state, { firebaseConnected: action.payload });
-        }
         case MESSAGE_RECIEVED: {
-            console.log(action.payload);
+            return [...state, action.payload];
+        }
+        case MESSAGE_SEND: {
+            return [...state,action.payload];
         }
         default:
             return state;
