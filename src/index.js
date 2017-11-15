@@ -11,11 +11,13 @@ import NavigationBar from './components/navigation-bar';
 import Chat from './components/chat';
 import ChatItem from './components/chat-list-item';
 
-const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, promise, logger)(createStore);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
+  applyMiddleware(thunkMiddleware, promise, logger)
+));
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-
+  <Provider store={store}>
     <BrowserRouter>
       <div>
         <NavigationBar />

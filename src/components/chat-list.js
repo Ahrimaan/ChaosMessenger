@@ -16,9 +16,9 @@ class Chat extends Component {
     }
 
     renderMessageList() {
-        if(this.props.messages.length >0){
-            this.props.messages.map((item) => {
-                return <ChatItem message={ item } />
+        if(this.props.messages.length >= 1){
+           return this.props.messages.map((item) => {
+                <ChatItem message={ item } />
             });
         }else{
             return <div>No messages......</div>

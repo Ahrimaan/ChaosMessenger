@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
-import { addMessageToChat } from '../actions/firebase-actions';
 import ChatList from './chat-list';
 import ChatInput from './chat-input';
+import { subscribeOnChat,addMessageToChat } from '../actions/firebase-actions';
 
-export default class Chat extends Component {
-    renderEmtpy() {
-        return <div></div>;
-    }
-
+class Chat extends Component {
     render() {
+        const {addMessageToChat,userid,username } = this.props;
         return (
             <div>
                 <ChatList />
-                <ChatInput />
+                <ChatInput onMessageInput= { addMessageToChat } userid={ userid } username={ username } />
             </div>
         );        
     }
 }
+
+function mapStateToProps(state) {
+    let newProps = {
+        userid:state.profile ? state.profile .user_id : '',
+        username:state.profile ?  state.profile.name : '',
+        profile: state.profile,
+        messages: state.firebase ? state.firebase : []
+    };
+    return newProps;
+}
+
+export default connect(mapStateToProps,{ subscribeOnChat, addMessageToChat})(Chat);

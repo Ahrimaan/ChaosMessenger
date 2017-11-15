@@ -31,7 +31,7 @@ export function addMessageToChat(message) {
     return (dispatch) => {
         let sendAction = {
             type:MESSAGE_SENDING,
-            payload:request
+            payload:message
         }
         dispatch(sendAction);
         let request = firebase.database().ref('chat').child('messages').push(message).then((value, err) => {

@@ -35,8 +35,6 @@ export function getCurrentUser() {
         }
         dispatch(action);      
     }
-
-    return action;
 }
 
 export function loggedIn(profile) {

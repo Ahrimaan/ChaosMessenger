@@ -2,7 +2,7 @@ import React from 'react';
 
 let ChatItem =({message}) => {
     return (
-        <li>{message}</li>
+        <li>{message.message}</li>
     );
 }
 
